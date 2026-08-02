@@ -1,0 +1,38 @@
+{
+  "name": "nextjs-saas",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "start": "next start",
+    "setup:stripe": "node scripts/setup-stripe.mjs",
+    "deploy": "node scripts/deploy-vercel.mjs"
+  },
+  "dependencies": {
+    "@auth0/nextjs-auth0": "^4.25.0",
+    "@neondatabase/serverless": "^1.1.0",
+    "@tensorflow-models/coco-ssd": "^2.2.3",
+    "@tensorflow/tfjs": "^4.22.0",
+    "next": "^16.2.4",
+    "posthog-js": "^1.261.6",
+    "posthog-node": "^5.8.1",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "stripe": "^19.2.0"
+  },
+  "overrides": {
+    "next": {
+      "postcss": "8.5.10"
+    }
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.4",
+    "@types/node": "^24.2.1",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "postcss": "^8.5.13",
+    "tailwindcss": "^4.2.4",
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,13 @@
+.env
+.env.local
+.env*.local
+# Everything under .projects/ is withheld EXCEPT the two manifests — see below.
+.projects/*
+!.projects/state.json
+!.projects/state.local.json
+.next/
+node_modules/
+*.tsbuildinfo
+.DS_Store
+CLAUDE.md
+AGENTS.md

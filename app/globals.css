@@ -1,0 +1,970 @@
+@import "tailwindcss" source(none);
+
+@source "../app";
+@source "../components";
+@source "../lib";
+
+/* ─────────────────────────────────────────────────────────────
+   LOUPE — design system
+   Neutral near-black base. ONE accent (beam cyan) owns the brand.
+   Jade is reserved for money that moved; flare for over-limit;
+   ember for failure. Matte surfaces, no gloss, no bloom.
+   ───────────────────────────────────────────────────────────── */
+
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jbmono), ui-monospace, SFMono-Regular, monospace;
+
+  /* surfaces — neutral, not teal */
+  --color-void: #0a0a0c;
+  --color-abyss: #101014;
+  --color-slate-deep: #16171c;
+
+  /* text */
+  --color-ink: #f4f5f7;
+  --color-mist: #b3b7c0;
+  --color-dim: #7c8291;
+
+  /* signal colors */
+  --color-beam: #5ce1ff;
+  --color-beam-deep: #22a7cc;
+  --color-jade: #34d399;
+  --color-flare: #fbbf24;
+  --color-ember: #fb7185;
+
+  /* motion */
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+:root {
+  interpolate-size: allow-keywords;
+  color-scheme: dark;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #0a0a0c;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+details > summary {
+  list-style: none;
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+::selection {
+  background: rgba(92, 225, 255, 0.26);
+  color: #fff;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.16) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.14);
+  border: 3px solid transparent;
+  background-clip: content-box;
+  border-radius: 99px;
+}
+
+select,
+textarea,
+input {
+  color-scheme: dark;
+}
+
+/* ── Ambient background ─────────────────────────────────────── */
+/* One soft, nearly-neutral bloom. The old triple-aurora cast the whole
+   page teal and read as muddy rather than deep. */
+
+.aurora {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.aurora::before {
+  content: "";
+  position: absolute;
+  width: 120vmax;
+  height: 80vmax;
+  left: 50%;
+  top: -46vmax;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(92, 225, 255, 0.075),
+    rgba(92, 225, 255, 0.022) 45%,
+    transparent 70%
+  );
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.02;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.grid-veil {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 80% 55% at 50% 0%, #000 15%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 55% at 50% 0%, #000 15%, transparent 75%);
+}
+
+/* ── Surfaces ───────────────────────────────────────────────── */
+/* No backdrop-filter here on purpose: it did nothing visible over a flat
+   background, cost GPU, and made every panel a containing block for
+   `position: fixed` children (see landmine 24). */
+
+.panel {
+  position: relative;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.038);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.panel-flat {
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.panel-lit {
+  position: relative;
+  border-radius: 20px;
+  background: rgba(92, 225, 255, 0.055);
+  border: 1px solid rgba(92, 225, 255, 0.32);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+.panel-amber {
+  position: relative;
+  border-radius: 20px;
+  background: rgba(251, 191, 36, 0.07);
+  border: 1px solid rgba(251, 191, 36, 0.34);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.panel-jade {
+  position: relative;
+  border-radius: 20px;
+  background: rgba(52, 211, 153, 0.07);
+  border: 1px solid rgba(52, 211, 153, 0.34);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.panel-ember {
+  position: relative;
+  border-radius: 14px;
+  background: rgba(251, 113, 133, 0.08);
+  border: 1px solid rgba(251, 113, 133, 0.3);
+}
+
+.hair {
+  border-color: rgba(255, 255, 255, 0.11);
+}
+
+/* ── Type ───────────────────────────────────────────────────── */
+
+.display {
+  font-weight: 600;
+  letter-spacing: -0.042em;
+  line-height: 0.95;
+  text-wrap: balance;
+}
+
+.eyebrow {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Buttons — matte, no gradient, no bloom ─────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 550;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0.5px);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.38;
+}
+
+.btn-primary {
+  color: #0a0a0c;
+  background: #eef0f3;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #ffffff;
+}
+
+.btn-jade {
+  color: #04150f;
+  background: #34d399;
+}
+
+.btn-jade:hover:not(:disabled) {
+  background: #4fdfaa;
+}
+
+.btn-ghost {
+  color: #e6e9ee;
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.13);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+/* ── Fields ─────────────────────────────────────────────────── */
+
+.field {
+  width: 100%;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  color: #f4f5f7;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.field::placeholder {
+  color: rgba(179, 183, 192, 0.55);
+}
+
+.field:focus {
+  outline: none;
+  border-color: rgba(92, 225, 255, 0.5);
+  box-shadow: 0 0 0 3px rgba(92, 225, 255, 0.1);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   THE LOUPE — a lens that drifts across the hero, brightening and
+   magnifying the field of procurement items behind the headline.
+   The glass really filters what is under it (backdrop-filter) and
+   really magnifies the grid (a larger background-size); each item
+   lights up on a schedule timed to the lens arriving over it.
+   ═══════════════════════════════════════════════════════════════ */
+
+.loupe-stage {
+  position: absolute;
+  top: 84px;
+  left: 50%;
+  margin-left: -550px;
+  width: 1100px;
+  height: 640px;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  mask-image: radial-gradient(ellipse 100% 92% at 50% 48%, #000 66%, transparent 99%);
+  -webkit-mask-image: radial-gradient(ellipse 100% 92% at 50% 48%, #000 66%, transparent 99%);
+}
+
+/* the field the lens inspects */
+.loupe-field {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 46px 46px;
+}
+
+.loupe-item {
+  position: absolute;
+  color: #5ce1ff;
+  opacity: 0.13;
+  filter: blur(1.4px) drop-shadow(0 0 0 rgba(92, 225, 255, 0));
+  animation: found 22s linear infinite;
+  animation-delay: var(--at, 0s);
+}
+
+.loupe-tag {
+  position: absolute;
+  white-space: nowrap;
+  font-family: var(--font-jbmono), monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  padding: 4px 8px;
+  border-radius: 6px;
+  opacity: 0;
+  animation: found-tag 22s linear infinite;
+  animation-delay: var(--at, 0s);
+}
+
+.loupe-tag-ok {
+  color: #34d399;
+  border: 1px solid rgba(52, 211, 153, 0.4);
+  background: rgba(52, 211, 153, 0.1);
+}
+
+.loupe-tag-over {
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.45);
+  background: rgba(251, 191, 36, 0.1);
+}
+
+/* the lens itself */
+.loupe-lens {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  animation: loupe-path 22s cubic-bezier(0.5, 0.02, 0.5, 0.98) infinite;
+  will-change: transform;
+}
+
+/* glass: real filtering of whatever is beneath */
+.loupe-glass {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  -webkit-backdrop-filter: brightness(2.5) saturate(1.45) contrast(1.04);
+  backdrop-filter: brightness(2.5) saturate(1.45) contrast(1.04);
+}
+
+/* the grid, genuinely magnified — same pattern at ~1.9x */
+.loupe-mag {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.075) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.075) 1px, transparent 1px);
+  background-size: 92px 92px;
+  background-position: center center;
+}
+
+/* barrel, rim light and specular sheen */
+.loupe-rim {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(92, 225, 255, 0.5);
+  box-shadow:
+    0 0 0 5px rgba(255, 255, 255, 0.04),
+    0 0 0 6px rgba(92, 225, 255, 0.14),
+    0 0 26px rgba(92, 225, 255, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 0 28px rgba(92, 225, 255, 0.12);
+  background-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 34%,
+    transparent 66%,
+    rgba(255, 255, 255, 0.045) 100%
+  );
+}
+
+/* faint crosshair ticks so it reads as an instrument */
+.loupe-rim::before,
+.loupe-rim::after {
+  content: "";
+  position: absolute;
+  background: rgba(92, 225, 255, 0.3);
+}
+
+.loupe-rim::before {
+  left: 50%;
+  top: 12px;
+  bottom: 12px;
+  width: 1px;
+  transform: translateX(-0.5px);
+  mask-image: linear-gradient(#000 0 14%, transparent 22% 78%, #000 86% 100%);
+  -webkit-mask-image: linear-gradient(#000 0 14%, transparent 22% 78%, #000 86% 100%);
+}
+
+.loupe-rim::after {
+  top: 50%;
+  left: 12px;
+  right: 12px;
+  height: 1px;
+  transform: translateY(-0.5px);
+  mask-image: linear-gradient(90deg, #000 0 14%, transparent 22% 78%, #000 86% 100%);
+  -webkit-mask-image: linear-gradient(90deg, #000 0 14%, transparent 22% 78%, #000 86% 100%);
+}
+
+/* ── The handle ───────────────────────────────────────────────────────
+   Turns the bare circle into something a person holds. It hangs off the
+   rim at 45° and is painted FIRST in the DOM, so the glass and rim cover
+   where it meets the barrel and it reads as attached rather than stuck on.
+
+   Geometry note: the handle must never change where the GLASS sits. The
+   lens path in @keyframes loupe-path positions the 180px circle, and the
+   items are lit relative to its centre — so this is anchored to that
+   centre with transform-origin and pushed outward, leaving the circle
+   itself untouched. */
+.loupe-handle {
+  position: absolute;
+  left: 50%;
+  top: calc(50% - 13px);
+  width: 132px;
+  height: 26px;
+  transform-origin: 0 50%;
+  transform: rotate(45deg) translateX(72px);
+  border-radius: 3px 13px 13px 3px;
+  /* Cool machined steel, not brass — the palette already has one accent and
+     a warm metal would start competing with it. Kept a stop darker than the
+     glass so the handle never out-shines the thing you are meant to look
+     through. */
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(196, 216, 230, 0.12) 26%,
+    rgba(104, 126, 142, 0.13) 64%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-left: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 10px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* the ferrule — the collar where the handle meets the barrel */
+.loupe-handle::before {
+  content: "";
+  position: absolute;
+  left: -8px;
+  top: -4px;
+  bottom: -4px;
+  width: 27px;
+  border-radius: 6px;
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.34) 0%,
+    rgba(150, 176, 192, 0.18) 55%,
+    rgba(255, 255, 255, 0.07) 100%
+  );
+  /* the one cyan note on the handle, so it belongs to the brand */
+  border: 1px solid rgba(92, 225, 255, 0.34);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 0 12px rgba(92, 225, 255, 0.12);
+}
+
+/* knurling on the grip, so it catches the light like a real instrument */
+.loupe-handle::after {
+  content: "";
+  position: absolute;
+  left: 44px;
+  right: 11px;
+  top: 5px;
+  bottom: 5px;
+  border-radius: 9px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.17) 0 1px,
+    transparent 1px 5px
+  );
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 84%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 84%, transparent);
+}
+
+/* Six evenly spaced stops. Stop i ARRIVES at i × 16.667% and dwells 8%
+   (1.76s of the 22s loop), then travels 8.67% to the next.
+   INVARIANT: each item's `--at` in loupe-stage.tsx must equal its arrival
+   time in seconds (i × 22/6 = i × 3.667s), and the reveal window in
+   `found` / `found-tag` must sit at the START of the item's own cycle so it
+   coincides with the dwell. Putting the reveal later (it used to be at
+   4%-14%) lights the item up just as the lens leaves — the reveals then look
+   random and unrelated to the lens. Waypoint = item − 90px (half the lens). */
+@keyframes loupe-path {
+  0%,
+  8% {
+    transform: translate(30px, 5px);
+  }
+  16.667%,
+  24.667% {
+    transform: translate(885px, 5px);
+  }
+  33.333%,
+  41.333% {
+    transform: translate(920px, 210px);
+  }
+  50%,
+  58% {
+    transform: translate(810px, 410px);
+  }
+  66.667%,
+  74.667% {
+    transform: translate(410px, 455px);
+  }
+  83.333%,
+  91.333% {
+    transform: translate(45px, 380px);
+  }
+  100% {
+    transform: translate(30px, 5px);
+  }
+}
+
+@keyframes found {
+  0% {
+    opacity: 0.13;
+    transform: scale(1);
+    filter: blur(1.4px) drop-shadow(0 0 0 rgba(92, 225, 255, 0));
+  }
+  2% {
+    opacity: 1;
+    transform: scale(1.2);
+    filter: blur(0) drop-shadow(0 0 14px rgba(92, 225, 255, 0.55));
+  }
+  7% {
+    opacity: 1;
+    transform: scale(1.2);
+    filter: blur(0) drop-shadow(0 0 14px rgba(92, 225, 255, 0.55));
+  }
+  9.5%,
+  100% {
+    opacity: 0.13;
+    transform: scale(1);
+    filter: blur(1.4px) drop-shadow(0 0 0 rgba(92, 225, 255, 0));
+  }
+}
+
+@keyframes found-tag {
+  0% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  3% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  7% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  9.5%,
+  100% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+/* ── Motion primitives ──────────────────────────────────────── */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@keyframes rise-sm {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes sweep {
+  0% {
+    top: 0%;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes breathe-amber {
+  0%,
+  100% {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 0 0 0 rgba(251, 191, 36, 0.2);
+  }
+  50% {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 0 0 9px rgba(251, 191, 36, 0);
+  }
+}
+
+@keyframes ring-out {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(2.1);
+    opacity: 0;
+  }
+}
+
+@keyframes shimmer {
+  to {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes travel {
+  0% {
+    left: -8%;
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    left: 104%;
+    opacity: 0;
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes bar {
+  0%,
+  100% {
+    transform: scaleY(0.22);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.anim-rise {
+  animation: rise 0.7s var(--ease-expo) both;
+  animation-delay: var(--d, 0ms);
+}
+
+.anim-rise-sm {
+  animation: rise-sm 0.45s var(--ease-expo) both;
+  animation-delay: var(--d, 0ms);
+}
+
+.anim-pop {
+  animation: pop 0.4s var(--ease-spring) both;
+  animation-delay: var(--d, 0ms);
+}
+
+.anim-breathe {
+  animation: breathe-amber 2.8s ease-in-out infinite;
+}
+
+.anim-float {
+  animation: float-y 5s ease-in-out infinite;
+}
+
+.anim-blink {
+  animation: blink 1.4s ease-in-out infinite;
+}
+
+.anim-spin-slow {
+  animation: spin-slow 9s linear infinite;
+}
+
+.scanline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(92, 225, 255, 0.85), transparent);
+  box-shadow: 0 0 18px 3px rgba(92, 225, 255, 0.4);
+  animation: sweep 2.6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.mic-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  border: 2px solid rgba(251, 113, 133, 0.55);
+  animation: ring-out 1.8s var(--ease-expo) infinite;
+  pointer-events: none;
+}
+
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    rgba(4, 21, 15, 0.45) 0%,
+    rgba(4, 21, 15, 1) 50%,
+    rgba(4, 21, 15, 0.45) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 1.6s linear infinite;
+}
+
+.reticle::before,
+.reticle::after {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: rgba(92, 225, 255, 0.5);
+  border-style: solid;
+}
+
+.reticle::before {
+  top: 12px;
+  left: 12px;
+  border-width: 2px 0 0 2px;
+  border-top-left-radius: 6px;
+}
+
+.reticle::after {
+  bottom: 12px;
+  right: 12px;
+  border-width: 0 2px 2px 0;
+  border-bottom-right-radius: 6px;
+}
+
+.lift {
+  transition:
+    transform 0.35s var(--ease-expo),
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+.lift:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.glow-jade {
+  box-shadow: 0 0 0 1px rgba(52, 211, 153, 0.22);
+}
+
+.glow-amber {
+  box-shadow: 0 0 0 1px rgba(251, 191, 36, 0.26);
+}
+
+/* ── Flow rail ──────────────────────────────────────────────── */
+
+.flow-node {
+  --tone: #5ce1ff;
+  --tone-glow: rgba(92, 225, 255, 0.5);
+  opacity: 0.78;
+  animation: node-text 8s linear infinite;
+  animation-delay: calc(var(--i) * 1.15s);
+}
+
+.flow-node-flare {
+  --tone: #fbbf24;
+  --tone-glow: rgba(251, 191, 36, 0.5);
+}
+
+.flow-node-jade {
+  --tone: #34d399;
+  --tone-glow: rgba(52, 211, 153, 0.5);
+}
+
+.flow-dot {
+  display: block;
+  height: 9px;
+  width: 9px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  background: #16171c;
+  animation: node-lit 8s linear infinite;
+  animation-delay: calc(var(--i) * 1.15s);
+}
+
+.flow-pulse {
+  animation: travel 8s cubic-bezier(0.45, 0, 0.25, 1) infinite;
+}
+
+@keyframes node-text {
+  0%,
+  6% {
+    opacity: 0.78;
+  }
+  13%,
+  27% {
+    opacity: 1;
+  }
+  42%,
+  100% {
+    opacity: 0.78;
+  }
+}
+
+@keyframes node-lit {
+  0%,
+  6% {
+    background: #16171c;
+    border-color: rgba(255, 255, 255, 0.28);
+    box-shadow: 0 0 0 0 transparent;
+  }
+  13%,
+  27% {
+    background: var(--tone);
+    border-color: var(--tone);
+    box-shadow: 0 0 14px 2px var(--tone-glow);
+  }
+  42%,
+  100% {
+    background: #16171c;
+    border-color: rgba(255, 255, 255, 0.28);
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+/* ── Limit meters ───────────────────────────────────────────── */
+
+.meter {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.075);
+  overflow: hidden;
+}
+
+.meter-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  animation: fill-in 1.4s var(--ease-expo) both;
+  animation-delay: var(--d, 0ms);
+}
+
+@keyframes fill-in {
+  from {
+    width: 0;
+  }
+  to {
+    width: var(--w, 0%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .loupe-item {
+    opacity: 0.5;
+    filter: none;
+  }
+}

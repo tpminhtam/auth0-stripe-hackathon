@@ -1,0 +1,198 @@
+{
+  "version": 1,
+  "project": {
+    "initializedAt": "2026-07-26T00:24:10.251Z",
+    "merchantDisplayName": "Tam Tran",
+    "merchantId": "acct_1SbuwdCnlzKHVMN4",
+    "projectId": "project_61V6dooSGkEXp3rkw16TlIu0MYSQyq1uQoS1wg3k0IqO",
+    "projectName": "say-so"
+  },
+  "providers": {
+    "auth0": {
+      "accountRequestId": "facctrq_61V6drPdHUK9paY8716TlIu0MYSQyq1uQoS1wg3k0J3g",
+      "configuration": {
+        "locality": "us",
+        "naming_prefix": "sayso"
+      },
+      "linkedAt": "2026-07-26T00:26:58.628Z",
+      "providerId": "prvdr_61UVctyxfLOj4FpVw5Bmi",
+      "providerName": "Auth0",
+      "redirectUrl": null,
+      "requestedAt": "2026-07-26T00:26:58.627Z",
+      "status": "expired"
+    },
+    "elevenlabs": {
+      "accountRequestId": "facctrq_61V6dsVvIV4TipygN16TlIu0MYSQyq1uQoS1wg3k0P9s",
+      "configuration": {},
+      "linkedAt": "2026-07-26T00:28:02.814Z",
+      "providerId": "prvdr_61UYtnmm5DvySq8Ol56tE",
+      "providerName": "ElevenLabs",
+      "redirectUrl": null,
+      "requestedAt": "2026-07-26T00:28:02.814Z",
+      "status": "complete"
+    },
+    "neon": {
+      "accountRequestId": "facctrq_61V6dsCubixam6eeJ16TlIu0MYSQyq1uQoS1wg3k0Gw4",
+      "configuration": {},
+      "linkedAt": "2026-07-26T00:27:42.606Z",
+      "providerId": "prvdr_61UH8uNXFdoJUJOtT54AC",
+      "providerName": "Neon",
+      "redirectUrl": null,
+      "requestedAt": "2026-07-26T00:27:42.605Z",
+      "status": "complete"
+    },
+    "openrouter": {
+      "accountRequestId": "facctrq_61V6dsNgsDP7fZpby16TlIu0MYSQyq1uQoS1wg3k0Ffk",
+      "configuration": {},
+      "linkedAt": "2026-07-26T00:27:51.971Z",
+      "providerId": "prvdr_61URImmFACEuDHEx651IO",
+      "providerName": "OpenRouter",
+      "redirectUrl": null,
+      "requestedAt": "2026-07-26T00:27:51.971Z",
+      "status": "complete"
+    },
+    "vercel": {
+      "accountRequestId": "facctrq_61V7H5mrgOTj3kLRu16TlIu0MYSQyq1uQoS1wg3k04QC",
+      "configuration": {},
+      "linkedAt": "2026-07-27T18:20:22.514Z",
+      "providerId": "prvdr_61ULUAr4zlQgZkvXY5LsG",
+      "providerName": "Vercel",
+      "redirectUrl": null,
+      "requestedAt": "2026-07-27T18:20:22.514Z",
+      "status": "complete"
+    }
+  },
+  "resources": {
+    "auth0-client": {
+      "configuration": {
+        "name": "say-so",
+        "description": "Say-So team purchasing agent",
+        "app_type": "regular_web",
+        "callbacks": [
+          "http://localhost:3000/auth/callback",
+          "http://localhost:3001/auth/callback"
+        ],
+        "allowed_logout_urls": [
+          "http://localhost:3000",
+          "http://localhost:3001"
+        ],
+        "web_origins": [
+          "http://localhost:3000",
+          "http://localhost:3001"
+        ]
+      },
+      "createdAt": "2026-07-26T00:27:16.275Z",
+      "lastRevealedAt": "2026-07-26T00:32:59.150Z",
+      "lastStatus": "complete",
+      "name": "auth0-client",
+      "providerId": "prvdr_61UVctyxfLOj4FpVw5Bmi",
+      "providerName": "Auth0",
+      "resourceId": "fres_61V6drkpFPBxDrmUI16TlIu0MYSQyq1uQoS1wg3k0Ncm",
+      "serviceId": "client"
+    },
+    "auth0-mgmt": {
+      "configuration": {
+        "name": "sayso-mgmt",
+        "app_type": "non_interactive"
+      },
+      "createdAt": "2026-07-26T00:44:04.236Z",
+      "lastRevealedAt": "2026-07-26T00:44:04.485Z",
+      "lastStatus": "complete",
+      "name": "auth0-mgmt",
+      "providerId": "prvdr_61UVctyxfLOj4FpVw5Bmi",
+      "providerName": "Auth0",
+      "resourceId": "fres_61V6e80AoEyDXD2ul16TlIu0MYSQyq1uQoS1wg3k0JBY",
+      "serviceId": "client"
+    },
+    "auth0-plan": {
+      "configuration": {},
+      "createdAt": "2026-07-26T00:27:02.184Z",
+      "lastRevealedAt": "2026-07-26T00:27:02.508Z",
+      "lastStatus": "complete",
+      "name": "auth0-plan",
+      "providerId": "prvdr_61UVctyxfLOj4FpVw5Bmi",
+      "providerName": "Auth0",
+      "resourceId": "fres_61V6drXk5h2echQd016TlIu0MYSQyq1uQoS1wg3k0GjQ",
+      "serviceId": "free"
+    },
+    "elevenlabs-tts": {
+      "configuration": {},
+      "createdAt": "2026-07-26T00:28:03.922Z",
+      "lastRevealedAt": "2026-07-26T00:28:04.193Z",
+      "lastStatus": "complete",
+      "name": "elevenlabs-tts",
+      "providerId": "prvdr_61UYtnmm5DvySq8Ol56tE",
+      "providerName": "ElevenLabs",
+      "resourceId": "fres_61V6dsZ52rHH17Eau16TlIu0MYSQyq1uQoS1wg3k04Ai",
+      "serviceId": "tts"
+    },
+    "neon-plan": {
+      "configuration": {},
+      "createdAt": "2026-07-26T00:27:44.380Z",
+      "lastRevealedAt": "2026-07-26T00:27:44.611Z",
+      "lastStatus": "complete",
+      "name": "neon-plan",
+      "providerId": "prvdr_61UH8uNXFdoJUJOtT54AC",
+      "providerName": "Neon",
+      "resourceId": "fres_61V6dsFsPhJI2iRKL16TlIu0MYSQyq1uQoS1wg3k00TA",
+      "serviceId": "free"
+    },
+    "neon-postgres": {
+      "configuration": {},
+      "createdAt": "2026-07-26T00:27:48.533Z",
+      "lastRevealedAt": "2026-07-26T00:27:48.741Z",
+      "lastStatus": "complete",
+      "name": "neon-postgres",
+      "providerId": "prvdr_61UH8uNXFdoJUJOtT54AC",
+      "providerName": "Neon",
+      "resourceId": "fres_61V6dsIdyxlJEjESb16TlIu0MYSQyq1uQoS1wg3k0BdQ",
+      "serviceId": "postgres"
+    },
+    "openrouter-api": {
+      "configuration": {},
+      "createdAt": "2026-07-26T00:27:56.416Z",
+      "lastRevealedAt": "2026-07-26T00:27:56.667Z",
+      "lastStatus": "complete",
+      "name": "openrouter-api",
+      "providerId": "prvdr_61URImmFACEuDHEx651IO",
+      "providerName": "OpenRouter",
+      "resourceId": "fres_61V6dsROYevAT153v16TlIu0MYSQyq1uQoS1wg3k0WXw",
+      "serviceId": "api"
+    },
+    "openrouter-plan": {
+      "configuration": {},
+      "createdAt": "2026-07-26T00:27:53.345Z",
+      "lastRevealedAt": "2026-07-27T20:27:48.345Z",
+      "lastStatus": "complete",
+      "name": "openrouter-plan",
+      "providerId": "prvdr_61URImmFACEuDHEx651IO",
+      "providerName": "OpenRouter",
+      "resourceId": "fres_61V6dsOL0k5HoOJmV16TlIu0MYSQyq1uQoS1wg3k0EYi",
+      "serviceId": "pay_as_you_go"
+    },
+    "vercel-plan": {
+      "configuration": {},
+      "createdAt": "2026-07-27T18:20:23.732Z",
+      "lastRevealedAt": "2026-07-27T18:20:24.118Z",
+      "lastStatus": "complete",
+      "name": "vercel-plan",
+      "providerId": "prvdr_61ULUAr4zlQgZkvXY5LsG",
+      "providerName": "Vercel",
+      "resourceId": "fres_61V7H5rI9tMBtc9fm16TlIu0MYSQyq1uQoS1wg3k0OF6",
+      "serviceId": "hobby"
+    },
+    "vercel-project": {
+      "configuration": {
+        "name": "say-so"
+      },
+      "createdAt": "2026-07-27T18:20:26.699Z",
+      "lastRevealedAt": "2026-07-30T23:35:11.851Z",
+      "lastStatus": "complete",
+      "name": "vercel-project",
+      "providerId": "prvdr_61ULUAr4zlQgZkvXY5LsG",
+      "providerName": "Vercel",
+      "resourceId": "fres_61V7H5tTla5UHolG716TlIu0MYSQyq1uQoS1wg3k0AtM",
+      "serviceId": "project"
+    }
+  }
+}
